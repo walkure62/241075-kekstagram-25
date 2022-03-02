@@ -1,8 +1,7 @@
 const getRandomNumber = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.floor(Math.random() * (upper - lower + 1)) + lower;
-  return result;
+  return Math.floor(Math.random() * (upper - lower + 1)) + lower;
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -43,6 +42,9 @@ const DESCRIPTION = [
 ];
 
 const POST_QUANTITY = 25;
+const ID_NUMBER = 1000;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
 
 const getRandomArrayElement = (array) =>
   array[getRandomNumber(0, array.length - 1)];
@@ -58,11 +60,11 @@ const counterUrl = makeCounter(1);
 
 const COMMENTS_ID = [];
 const createCommentId =  () => {
-  const randomNumber = Math.floor(Math.random() * 1000);
+  const randomNumber = Math.floor(Math.random() * ID_NUMBER);
   if (!COMMENTS_ID.includes(randomNumber)) {
     COMMENTS_ID.push(randomNumber);
     return randomNumber;
-  } else if (COMMENTS_ID.length - 1 !== 1000) {
+  } else if (COMMENTS_ID.length - 1 !== ID_NUMBER) {
     createCommentId();
   }
 };
@@ -78,7 +80,7 @@ const createPost = () => ({
   id: counterId(),
   url: `photos/${counterUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTION),
-  likes: getRandomNumber(15, 200),
+  likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
   comments: createComment(),
 
 });
