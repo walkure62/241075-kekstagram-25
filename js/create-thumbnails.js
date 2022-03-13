@@ -10,8 +10,11 @@ const createPictures = (data) => {
   pictureElement.querySelector('.picture__img').src = data.url;
   pictureElement.querySelector('.picture__likes').textContent = data.likes;
   pictureElement.querySelector('.picture__comments').textContent = data.comments.length;
-
+  pictureElement.querySelector('.picture__img').alt = data.description;
   picturesFragment.appendChild(pictureElement);
+
+  const comments = data.comments;
+  return comments;
 };
 
 const renderPictures = () => {
@@ -22,4 +25,4 @@ const renderPictures = () => {
 };
 
 
-export {renderPictures};
+export {posts, renderPictures};
