@@ -31,4 +31,19 @@ const createCommentId =  () => {
   }
 };
 
-export {getRandomNumber, checkMaxLength, getRandomArrayElement, counterId, counterUrl, createCommentId};
+const removeAllChildren = (element) => {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild);
+  }
+};
+
+const closePopup = (block, closeButton) => {
+  closeButton.addEventListener('click', () => block.classList.add('hidden'));
+  document.addEventListener('keydown', (element) => {
+    if (element.key === 'Escape') {
+      block.classList.add('hidden');
+    }
+  });
+};
+
+export {getRandomNumber, checkMaxLength, getRandomArrayElement, counterId, counterUrl, createCommentId, removeAllChildren, closePopup};

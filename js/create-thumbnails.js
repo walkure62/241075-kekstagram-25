@@ -11,6 +11,8 @@ const createPictures = (data) => {
   pictureElement.querySelector('.picture__likes').textContent = data.likes;
   pictureElement.querySelector('.picture__comments').textContent = data.comments.length;
   pictureElement.querySelector('.picture__img').alt = data.description;
+  pictureElement.querySelector('.picture__img').id = data.id;
+
   picturesFragment.appendChild(pictureElement);
 
   const comments = data.comments;

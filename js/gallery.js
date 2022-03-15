@@ -1,14 +1,9 @@
-import { renderPictures } from '../js/create-thumbnails.js';
-import { showBigPicture } from '../js/show-full-photo.js';
+import { fillFullPhoto } from '../js/show-full-photo.js';
 
-renderPictures();
-
-const thumbnailsImage = document.querySelectorAll('.picture');
-
-const clickedElement = () => thumbnailsImage.forEach((element) => {
+const openFullPhoto = () => document.querySelectorAll('.picture').forEach((element) => {
   element.addEventListener('click', () => {
-    showBigPicture(element);
+    fillFullPhoto(element);
   });
 });
 
-export {clickedElement};
+export {openFullPhoto};
