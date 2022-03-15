@@ -20,7 +20,6 @@ const makeCounter = (start) => {
 const counterId = makeCounter(1);
 const counterUrl = makeCounter(1);
 
-//const COMMENTS_ID = [];
 const createCommentId =  () => {
   const randomNumber = Math.floor(Math.random() * ID_NUMBER);
   if (!COMMENTS_ID.includes(randomNumber)) {

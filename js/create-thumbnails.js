@@ -14,9 +14,6 @@ const createPictures = (data) => {
   pictureElement.querySelector('.picture__img').id = data.id;
 
   picturesFragment.appendChild(pictureElement);
-
-  const comments = data.comments;
-  return comments;
 };
 
 const renderPictures = () => {
@@ -25,6 +22,5 @@ const renderPictures = () => {
   }
   pictures.appendChild(picturesFragment);
 };
-
 
 export {posts, renderPictures};
