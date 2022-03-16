@@ -36,10 +36,13 @@ const removeAllChildren = (element) => {
   }
 };
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
 const closePopup = (block, closeButton) => {
   closeButton.addEventListener('click', () => block.classList.add('hidden'));
-  document.addEventListener('keydown', (element) => {
-    if (element.key === 'Escape') {
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
       block.classList.add('hidden');
     }
   });

@@ -51,8 +51,7 @@ const fillFullPhoto = (data) => {
   counterComments.classList.add('hidden');
   loaderComments.classList.add('hidden');
   body.classList.add('modal-open');
+  closePopup(bigPicture, buttonBigPictureCancel);
 };
-
-closePopup(bigPicture, buttonBigPictureCancel);
 
 export {fillFullPhoto};
