@@ -24,6 +24,6 @@ const createPost = () => ({
 
 });
 
-const POSTS = () => Array.from({ length: POST_QUANTITY }, createPost);
+const getPosts = () => Array.from({ length: POST_QUANTITY }, createPost);
 
-export {POSTS};
+export {getPosts};

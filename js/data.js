@@ -1,3 +1,7 @@
+import { getPosts } from '../js/create-posts.js';
+
+const BODY = document.querySelector('body');
+
 const NAMES = [
   'Иван',
   'Анастасия',
@@ -39,5 +43,6 @@ const MAX_LIKES = 200;
 const MIN_COMMENTS = 1;
 const MAX_COMMENTS = 10;
 const COMMENTS_ID = [];
+const POSTS = getPosts();
 
-export {NAMES, COMMENTS, DESCRIPTION, POST_QUANTITY, ID_NUMBER, MAX_LIKES, MIN_LIKES, MIN_COMMENTS, MAX_COMMENTS, COMMENTS_ID};
+export {BODY, NAMES, COMMENTS, DESCRIPTION, POST_QUANTITY, ID_NUMBER, MAX_LIKES, MIN_LIKES, MIN_COMMENTS, MAX_COMMENTS, COMMENTS_ID, POSTS};

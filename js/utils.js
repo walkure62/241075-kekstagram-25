@@ -1,4 +1,4 @@
-import {COMMENTS_ID, ID_NUMBER} from '../js/data.js';
+import {COMMENTS_ID, ID_NUMBER, BODY} from '../js/data.js';
 
 const getRandomNumber = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -36,13 +36,38 @@ const removeAllChildren = (element) => {
   }
 };
 
-const closePopup = (block, closeButton) => {
-  closeButton.addEventListener('click', () => block.classList.add('hidden'));
-  document.addEventListener('keydown', (element) => {
-    if (element.key === 'Escape') {
-      block.classList.add('hidden');
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const closePopup = (element, closeButton) => {
+  BODY.classList.remove('modal-open');
+
+  const onElementCloseClick = () => {
+    BODY.classList.remove('modal-open');
+    element.classList.add('hidden');
+    closeButton.removeEventListener('click', onElementCloseClick);
+    // eslint-disable-next-line no-use-before-define
+    document.removeEventListener('keydown', onElementKeydownEsc);
+    // eslint-disable-next-line no-use-before-define
+    element.removeEventListener('click', onElementClickOutside);
+  };
+  const onElementKeydownEsc = (evt) => {
+    if (isEscapeKey(evt)) {
+      evt.preventDefault();
+      onElementCloseClick();
     }
-  });
+  };
+
+  const onElementClickOutside = (evt) => {
+    if (evt.target === element) {
+      evt.preventDefault();
+      onElementCloseClick();
+    }
+  };
+
+
+  closeButton.addEventListener('click', onElementCloseClick);
+  document.addEventListener('keydown', onElementKeydownEsc);
+  element.addEventListener('click', onElementClickOutside);
 };
 
 export {getRandomNumber, checkMaxLength, getRandomArrayElement, counterId, counterUrl, createCommentId, removeAllChildren, closePopup};
