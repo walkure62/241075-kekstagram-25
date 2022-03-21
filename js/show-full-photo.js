@@ -1,11 +1,10 @@
-import { posts } from '../js/create-thumbnails.js';
-import { removeAllChildren, closePopup } from '../js/utils.js';
+import { POSTS } from '../js/data.js';
+import { removeAllChildren } from '../js/utils.js';
+import { BODY } from '../js/data.js';
 
-const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
 const commentsList = document.querySelector('.social__comments');
 const templateComment = document.querySelector('#comment').content.querySelector('.social__comment');
-const buttonBigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const counterComments = bigPicture.querySelector('.social__comment-count');
 const loaderComments = bigPicture.querySelector('.comments-loader');
 
@@ -28,31 +27,24 @@ const fillFullPhoto = (data) => {
   const likes = document.querySelector('.likes-count');
   const comments = document.querySelector('.comments-count');
   const description = bigPicture.querySelector('.social__caption');
+  const idClickedElement = data.getAttribute('id');
 
-  const clickedElement = data.innerHTML;
-  const newElement = document.createElement('div');
-  newElement.innerHTML = clickedElement;
-  const idClickedElement = newElement.querySelector('.picture__img').getAttribute('id');
+  image.src = data.getAttribute('src');
+  image.alt = data.getAttribute('alt');
 
-  image.src = newElement.querySelector('.picture__img').getAttribute('src');
-  likes.textContent = newElement.querySelector('.picture__likes').innerText;
-  comments.textContent = newElement.querySelector('.picture__comments').innerText;
-
-  image.innerHTML = image;
-
-  posts.forEach((post) => {
+  POSTS.forEach((post) => {
     if (post.id === Number(idClickedElement)) {
       description.textContent = post.description;
+      likes.textContent = post.likes;
+      comments.textContent = post.comments.length;
       fillComments(commentsList, post.comments);
     }
   });
 
+  BODY.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
   counterComments.classList.add('hidden');
   loaderComments.classList.add('hidden');
-  body.classList.add('modal-open');
 };
 
-closePopup(bigPicture, buttonBigPictureCancel);
-
-export {fillFullPhoto};
+export {fillFullPhoto, bigPicture};

@@ -1,6 +1,4 @@
-import { POSTS } from '../js/create-posts.js';
-
-const posts = POSTS();
+import { POSTS } from '../js/data.js';
 const pictures = document.querySelector('.pictures');
 const picturesTemplate = document.querySelector('#picture').content;
 const picturesFragment = document.createDocumentFragment();
@@ -17,10 +15,10 @@ const createPictures = (data) => {
 };
 
 const renderPictures = () => {
-  for (let i = 0; i < posts.length; i++) {
-    createPictures(posts[i]);
-  }
+  POSTS.forEach((post) => {
+    createPictures(post);
+  });
   pictures.appendChild(picturesFragment);
 };
 
-export {posts, renderPictures};
+export {pictures, renderPictures};
