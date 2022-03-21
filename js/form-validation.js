@@ -16,10 +16,7 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'field__error'
 });
 
-const getHashTags = (str) => {
-  const splitArray = str.split(' ').map((element) => element.toLowerCase());
-  return splitArray;
-};
+const getHashTags = (str) => str.split(' ').map((element) => element.toLowerCase());
 
 //Проверка на количество хэш-тегов - не более maxHashTagsAmount
 const checkHashTagsAmount = (tags) => tags.length <= maxHashTagsAmount;
@@ -32,14 +29,17 @@ const validateHashTags = (value) => getHashTags(value).every((element, index, ar
 );
 
 //Проверка длины введенного комментария - не более maxDescriptionLength
-const validateDescription = (value) => value.length >= 1 && value.length <= maxDescriptionLength;
+const validateDescription = (str) => str.length >= 1 && str.length <= maxDescriptionLength;
 
 pristine.addValidator(uploadForm.querySelector('.text__hashtags'), validateHashTags, 'Введено невалидное значение хэш-тега');
 pristine.addValidator(uploadForm.querySelector('.text__description'), validateDescription, 'Длина комментария не должна превышать 140 символов');
 
 const onUploadFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  const isValid = pristine.validate();
+  if (!isValid) {
+    evt.preventDefault();
+  }
+  uploadForm.submit();
 };
 
-export {onUploadFormSubmit};
+export {onUploadFormSubmit, pristine};

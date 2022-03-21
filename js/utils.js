@@ -51,7 +51,7 @@ const closePopup = (element, closeButton) => {
     element.removeEventListener('click', onElementClickOutside);
   };
   const onElementKeydownEsc = (evt) => {
-    if (isEscapeKey(evt)) {
+    if (isEscapeKey(evt) && evt.target !== document.querySelector('.text__hashtags') && evt.target !== document.querySelector('.text__description')) {
       evt.preventDefault();
       onElementCloseClick();
     }
