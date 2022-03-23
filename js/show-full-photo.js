@@ -41,9 +41,6 @@ const fillComments = (insertPointComments, comments) => {
       commentsShow = commentsArray.splice(0, COMMENTS_LOAD_LIMIT);
       showComments(commentsShow);
 
-      console.log(commentsShow);
-      console.log(comments);
-      console.log(commentsCounter);
       commentsCounter += commentsShow.length;
       counterComments.textContent = commentsCounter;
       counterComments.querySelector('.comments-count').textContent = commentsArrayLength;
