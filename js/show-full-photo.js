@@ -11,9 +11,10 @@ const COMMENTS_LOAD_LIMIT = 5;
 
 const fillComments = (insertPointComments, comments) => {
   const fragmentComments = document.createDocumentFragment();
-  const commentsArray = comments;
+  const commentsArray = comments.slice();
+  const commentsArrayLength = commentsArray.length;
   let commentsShow = [];
-  //let commentsCounter = 0;
+  let commentsCounter = 0;
   counterComments.classList.add('hidden');
   loaderComments.classList.add('hidden');
   removeAllChildren(commentsList);
@@ -29,13 +30,23 @@ const fillComments = (insertPointComments, comments) => {
       insertPointComments.appendChild(fragmentComments);
     });
   };
-  if (commentsArray.length > 5) {
+  if (commentsArray.length > COMMENTS_LOAD_LIMIT) {
+    counterComments.classList.remove('hidden');
     commentsShow = commentsArray.splice(0, COMMENTS_LOAD_LIMIT);
     loaderComments.classList.remove('hidden');
+    commentsCounter = commentsShow.length;
+    counterComments.querySelector('.comments-count').textContent = commentsArrayLength;
     showComments(commentsShow);
     loaderComments.addEventListener('click', () => {
       commentsShow = commentsArray.splice(0, COMMENTS_LOAD_LIMIT);
       showComments(commentsShow);
+
+      console.log(commentsShow);
+      console.log(comments);
+      console.log(commentsCounter);
+      commentsCounter += commentsShow.length;
+      counterComments.textContent = commentsCounter;
+      counterComments.querySelector('.comments-count').textContent = commentsArrayLength;
       if (commentsArray.length === 0) {
         loaderComments.classList.add('hidden');
       }
