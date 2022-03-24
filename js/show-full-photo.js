@@ -8,15 +8,13 @@ const templateComment = document.querySelector('#comment').content.querySelector
 const counterComments = bigPicture.querySelector('.social__comment-count');
 const loaderComments = bigPicture.querySelector('.comments-loader');
 const COMMENTS_LOAD_LIMIT = 5;
+let commentsCounter = 0;
 
 const fillComments = (insertPointComments, comments) => {
   const fragmentComments = document.createDocumentFragment();
   const commentsArray = comments.slice();
   const commentsArrayLength = commentsArray.length;
   let commentsShow = [];
-  let commentsCounter = 0;
-  counterComments.classList.add('hidden');
-  loaderComments.classList.add('hidden');
   removeAllChildren(commentsList);
 
   const showComments = (array) => {
@@ -26,29 +24,33 @@ const fillComments = (insertPointComments, comments) => {
       commentator.src = comment.avatar;
       commentator.alt = comment.name;
       commentElement.querySelector('.social__text').textContent = comment.message;
+      counterComments.querySelector('.comments-count-view').textContent = commentsCounter;
+      counterComments.querySelector('.comments-count').textContent = commentsArrayLength;
       fragmentComments.appendChild(commentElement);
       insertPointComments.appendChild(fragmentComments);
     });
   };
+
+  const onCommentsView = () => {
+    commentsShow = commentsArray.splice(0, COMMENTS_LOAD_LIMIT);
+    commentsCounter += commentsShow.length;
+    showComments(commentsShow);
+    if (commentsArray.length === 0) {
+      loaderComments.classList.add('hidden');
+      loaderComments.removeEventListener('click', onCommentsView);
+    }
+  };
+
   if (commentsArray.length > COMMENTS_LOAD_LIMIT) {
     counterComments.classList.remove('hidden');
     commentsShow = commentsArray.splice(0, COMMENTS_LOAD_LIMIT);
     loaderComments.classList.remove('hidden');
     commentsCounter = commentsShow.length;
-    counterComments.querySelector('.comments-count').textContent = commentsArrayLength;
-    showComments(commentsShow);
-    loaderComments.addEventListener('click', () => {
-      commentsShow = commentsArray.splice(0, COMMENTS_LOAD_LIMIT);
-      showComments(commentsShow);
 
-      commentsCounter += commentsShow.length;
-      counterComments.textContent = commentsCounter;
-      counterComments.querySelector('.comments-count').textContent = commentsArrayLength;
-      if (commentsArray.length === 0) {
-        loaderComments.classList.add('hidden');
-      }
-    });
+    showComments(commentsShow);
+    loaderComments.addEventListener('click', onCommentsView);
   } else {
+    counterComments.classList.add('hidden');
     showComments(commentsArray);
   }
 };
