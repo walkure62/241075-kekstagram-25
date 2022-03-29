@@ -1,10 +1,12 @@
-import { BODY } from '../js/data.js';
 import { closePopup } from '../js/utils.js';
 import { onUploadFormSubmit, pristine} from '../js/form-validation.js';
 
+const BODY = document.querySelector('body');
 const uploadButton = document.querySelector('#upload-file');
 const editForm = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
+import { onError } from '../js/utils.js';
+
 const buttonEditFormCancel = document.querySelector('#upload-cancel');
 const photoPreview = document.querySelector('.img-upload__preview');
 const intensivityEffectForm = document.querySelector('.img-upload__effect-level');
@@ -24,7 +26,7 @@ const openEditor = () => {
     BODY.classList.add('modal-open');
     editForm.classList.remove('hidden');
     closeEditForm();
-    uploadForm.addEventListener('submit', onUploadFormSubmit);
+    onUploadFormSubmit(closeEditForm, onError);
   });
 };
 

@@ -1,6 +1,7 @@
-import { POSTS } from '../js/data.js';
 import { removeAllChildren } from '../js/utils.js';
-import { BODY } from '../js/data.js';
+import { pictures } from '../js/data-server.js';
+
+const BODY = document.querySelector('body');
 
 const bigPicture = document.querySelector('.big-picture');
 const commentsList = document.querySelector('.social__comments');
@@ -68,7 +69,7 @@ const fillFullPhoto = (data) => {
   BODY.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
 
-  POSTS.forEach((post) => {
+  pictures.forEach((post) => {
     if (post.id === Number(idClickedElement)) {
       description.textContent = post.description;
       likes.textContent = post.likes;

@@ -8,7 +8,7 @@ const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
 
 const changeScale = () => {
-  let scaleValue = scaleControlValue.value = 100;
+  let scaleValue = scaleControlValue.value = MAX_SCALE_VALUE;
 
   const setStyleScale = () => {
     photoPreviewImg.style['transform'] = `scale(${scaleValue / 100})`;
