@@ -5,7 +5,6 @@ const BODY = document.querySelector('body');
 const uploadButton = document.querySelector('#upload-file');
 const editForm = document.querySelector('.img-upload__overlay');
 const uploadForm = document.querySelector('.img-upload__form');
-import { onError } from '../js/utils.js';
 
 const buttonEditFormCancel = document.querySelector('#upload-cancel');
 const photoPreview = document.querySelector('.img-upload__preview');
@@ -25,8 +24,8 @@ const openEditor = () => {
   uploadButton.addEventListener('change', () => {
     BODY.classList.add('modal-open');
     editForm.classList.remove('hidden');
+    onUploadFormSubmit(closeEditForm);
     closeEditForm();
-    onUploadFormSubmit(closeEditForm, onError);
   });
 };
 

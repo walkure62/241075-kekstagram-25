@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
-import { onError } from '../js/utils.js';
+import { blockSubmitButton, unblockSubmitButton} from '../js/utils.js';
+import { postData } from '../js/data-server.js';
 const uploadForm = document.querySelector('.img-upload__form');
+const submitButton = document.querySelector('.img-upload__submit');
+const descriptionTextarea = uploadForm.querySelector('.text__description');
+const hashTagsInput = uploadForm.querySelector('.text__hashtags');
 
 const MAX_HASH_TAGS_AMOUNT = 5;
 const MAX_DESCRIPTION_LENGTH = 140;
@@ -11,79 +15,86 @@ const MAX_HASH_TAGS_LENGTH = 20;
 const regularExpression = /^#[A-Za-zА-Яа-яËё0-9]{1,19}$/;
 
 const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__text',
-  errorClass: 'form__item--invalid', // Класс, обозначающий невалидное поле
-  successClass: 'form__item--valid', // Класс, обозначающий валидное поле
-  errorTextParent: 'img-upload__text',
-  errorTextTag: 'p',
-  errorTextClass: 'field__error'
+  classTo: 'validate__item',
+  errorClass: 'form__item--invalid',
+  successClass: 'form__item--valid',
+  errorTextParent: 'validate__item',
+  errorTextTag: 'div',
+  errorTextClass: 'form__error'
 });
 
-const getHashTags = (str) =>  {
-  const arrayTags =  [];
-  str.split(' ').map((element) => {
-    arrayTags.push(element.toLowerCase());
-  });
-  return arrayTags;
-};
+const getHashTags = (str) => str.split(' ').map((element) => element.toLowerCase());
 
 //Проверка на количество хэш-тегов - не более maxHashTagsAmount
-const checkHashTagsAmount = (tags) => tags.length <= MAX_HASH_TAGS_AMOUNT;
+const checkHashTagsAmount = (str) => {
+  console.log(str);
+  console.log(`Проверка на количество тегов (не более 5 тегов): ${getHashTags(str).length <= MAX_HASH_TAGS_AMOUNT}`);
+  return getHashTags(str).length <= MAX_HASH_TAGS_AMOUNT;
+};
 
 //Проверка длины хэш-тега - не более MAX_HASH_TAGS_LENGTH
-const checkHashTagsLength = (tags) => tags.forEach((element) => element.length <= MAX_HASH_TAGS_LENGTH);
+const checkHashTagsLength = (str) => {
+  console.log(str);
+  console.log(`Проверка длины тега (не более 20 символов): ${getHashTags(str).every((element) => element.length <= MAX_HASH_TAGS_LENGTH)}`);
+  return getHashTags(str).every((element) => element.length <= MAX_HASH_TAGS_LENGTH);
+};
 
 //Проверка на отсутствие одинаковых хэш-тегов
-const checkHashTagsRepeat = (tags) => tags.every((currentValue, index, array) => array.indexOf(currentValue) === index);
+const checkHashTagsRepeat = (str) => {
+  console.log(str);
+  if (str.length !== 0) {
+    console.log(getHashTags(str));
+    console.log(`Проверка на повторение тегов: ${getHashTags(str).every((currentValue, index, array) => array.indexOf(currentValue) === index)}`);
+    return getHashTags(str).every((currentValue, index, array) => array.indexOf(currentValue) === index);
+  } else {
+    return true;
+  }
+};
 
-const validateHashTags = (value) => {
-  console.log(getHashTags(value));
-  getHashTags(value).forEach((element) => {
-    console.log(`Проверка через regExp: ${regularExpression.test(element)}`);
-    regularExpression.test(element);
-  });
-  console.log(`Проверка на количество тегов (не более 5 тегов): ${checkHashTagsAmount(getHashTags(value))}`);
-  checkHashTagsAmount(getHashTags(value));
-  console.log(`Проверка на повторение тегов: ${checkHashTagsRepeat(getHashTags(value))}`);
-  checkHashTagsRepeat(getHashTags(value));
-  console.log(`Проверка длины тега (не более 20 символов): ${checkHashTagsLength(getHashTags(value))}`);
-  checkHashTagsLength(getHashTags(value));
-
+const checkHashTagsRegExp = (str) => {
+  console.log(str);
+  console.log(getHashTags(str));
+  if (str.length > 0) {
+    getHashTags(str).every((element) => {
+      console.log(`Проверка через regExp: ${regularExpression.test(element)}`);
+      return regularExpression.test(element);
+    });
+  } else {
+    return true;
+  }
 };
 
 //Проверка длины введенного комментария - не более maxDescriptionLength
 const validateDescription = (str) => {
-  console.log(`Проверка длины комментария: ${str.length >= 1 && str.length <= MAX_DESCRIPTION_LENGTH}`);
-  return str.length >= 1 && str.length <= MAX_DESCRIPTION_LENGTH;
+  console.log(str);
+  console.log(`Проверка длины комментария: ${str.length <= MAX_DESCRIPTION_LENGTH}`);
+  return str.length <= MAX_DESCRIPTION_LENGTH;
 };
 
-pristine.addValidator(uploadForm.querySelector('.text__hashtags'), validateHashTags, 'Введено невалидное значение хэш-тега');
-pristine.addValidator(uploadForm.querySelector('.text__description'), validateDescription, 'Длина комментария не должна превышать 140 символов');
+pristine.addValidator(hashTagsInput, checkHashTagsRegExp, 'Введено невалидное значение хэш-тега', true);
+pristine.addValidator(hashTagsInput, checkHashTagsAmount, `Количество хэш-тегов не должно превышать ${MAX_HASH_TAGS_AMOUNT}`);
+pristine.addValidator(hashTagsInput, checkHashTagsLength, `Длина хэш-тега не должна превышать ${MAX_HASH_TAGS_LENGTH} символов`);
+pristine.addValidator(hashTagsInput, checkHashTagsRepeat, 'Хэш-теги не должны повторяться!');
+pristine.addValidator(descriptionTextarea, validateDescription, `Длина комментария не должна превышать ${MAX_DESCRIPTION_LENGTH} символов`);
 
 const onUploadFormSubmit = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
     const isValid = pristine.validate();
     console.log(isValid);
-    evt.preventDefault();
 
     if (isValid) {
-      const formData = new FormData(evt.target);
-      fetch(
-        'https://25.javascript.pages.academy/kekstagram',
-        {
-          method: 'POST',
-          body: formData,
-        },
-      ).then((response) => {
-        if (response.ok) {
+      blockSubmitButton(submitButton);
+      postData(
+        () => {
           onSuccess();
-        } else {
-          throw new Error(`${response.status} ${response.statusText}`);
-        }
-      })
-        .catch((err) => {
-          onError(err, 'error-load-container');
-        });
+          unblockSubmitButton(submitButton);
+        },
+        () => {
+          unblockSubmitButton(submitButton);
+        },
+        new FormData(evt.target)
+      );
     }
   });
 };

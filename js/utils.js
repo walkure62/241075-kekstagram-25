@@ -60,16 +60,26 @@ const closePopup = (element, closeButton) => {
   element.addEventListener('click', onElementClickOutside);
 };
 
-const onError = (error, className) => {
+const onError = (element, error, className) => {
   const errorOverlay = document.createElement('div');
-  errorOverlay.classList.add(`${className}`);
+  errorOverlay.classList.add('error', `${className}`);
   errorOverlay.innerHTML = `<p>${error.message}</p>`;
-  BODY.appendChild(errorOverlay);
+  element.appendChild(errorOverlay);
 
   setTimeout(() => {
     errorOverlay.remove();
   }, ALERT_SHOW_TIME);
 };
 
+const blockSubmitButton = (submitButton) => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Подождите...';
+};
 
-export {getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren, closePopup, onError};
+const unblockSubmitButton = (submitButton) => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+
+export {getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren, closePopup, onError, blockSubmitButton, unblockSubmitButton};
