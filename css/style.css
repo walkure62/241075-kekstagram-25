@@ -1417,7 +1417,7 @@ main {
   display: none;
 }
 
-.error {
+.error-load-container {
   position: absolute;
   display: block;
   margin: 0 auto;
@@ -1430,9 +1430,6 @@ main {
   font-weight: 600;
   text-align: center;
   z-index: 2;
-}
-
-.error-load-container {
   top: 260px;
   width: 600px;
   height: 190px;

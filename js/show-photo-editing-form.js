@@ -12,11 +12,12 @@ const intensivityEffectForm = document.querySelector('.img-upload__effect-level'
 
 const closeEditForm = () => {
   uploadForm.reset();
+  pristine.reset();
   uploadButton.value = '';
   photoPreview.style['filter'] = 'none';
   photoPreview.querySelector('img').style['transform'] = 'none';
   intensivityEffectForm.classList.add('hidden');
-  pristine.reset();
+
   closePopup(editForm, buttonEditFormCancel);
 };
 
@@ -24,6 +25,7 @@ const openEditor = () => {
   uploadButton.addEventListener('change', () => {
     BODY.classList.add('modal-open');
     editForm.classList.remove('hidden');
+
     onUploadFormSubmit(closeEditForm);
     closeEditForm();
   });

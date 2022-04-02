@@ -1,9 +1,9 @@
 
 import { onError } from '../js/utils.js';
+import { showDownloadMessage } from '../js/utils.js';
 
 let pictures = [];
 const BODY = document.querySelector('body');
-const uploadForm = document.querySelector('.img-upload__form');
 const getData = (onSuccess) => {
   fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => {
@@ -24,21 +24,23 @@ const getData = (onSuccess) => {
 
 const postData = (onSuccess, onFail, body) => {
   fetch(
-    'https://25.javascript.pages.academy/kekstagra',
+    'https://25.javascript.pages.academy/kekstagram',
     {
       method: 'POST',
       body,
     },
   ).then((response) => {
     if (response.ok) {
+      showDownloadMessage('success');
       onSuccess();
     } else {
       onFail();
+      showDownloadMessage('error');
       throw new Error(`${response.status} ${response.statusText}`);
     }
   })
     .catch((err) => {
-      onError(uploadForm, err, 'error-post-container');
+      onError(BODY, err, 'error-post-container');
     });
 };
 

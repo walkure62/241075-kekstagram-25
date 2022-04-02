@@ -62,13 +62,22 @@ const closePopup = (element, closeButton) => {
 
 const onError = (element, error, className) => {
   const errorOverlay = document.createElement('div');
-  errorOverlay.classList.add('error', `${className}`);
+  errorOverlay.classList.add(`${className}`);
   errorOverlay.innerHTML = `<p>${error.message}</p>`;
   element.appendChild(errorOverlay);
 
   setTimeout(() => {
     errorOverlay.remove();
   }, ALERT_SHOW_TIME);
+};
+
+const showDownloadMessage = (status) => {
+  const statusTemplate = document.querySelector(`#${status}`).content;
+  const statusElement = statusTemplate.cloneNode(true);
+  BODY.classList.add('modal-open');
+  statusElement.classList.remove('hidden');
+  BODY.appendChild(statusElement);
+  closePopup (document.querySelector(`.${status}`), document.querySelector(`.${status}__button`));
 };
 
 const blockSubmitButton = (submitButton) => {
@@ -82,4 +91,5 @@ const unblockSubmitButton = (submitButton) => {
 };
 
 
-export {getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren, closePopup, onError, blockSubmitButton, unblockSubmitButton};
+export {getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren,
+  closePopup, onError, blockSubmitButton, unblockSubmitButton, showDownloadMessage};
