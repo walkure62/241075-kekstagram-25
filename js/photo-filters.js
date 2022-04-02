@@ -98,7 +98,7 @@ const settingsSlider = () => {
     }
   });
 
-  const onChangeFiltresList = (evt) => {
+  const onChangeFiltersList = (evt) => {
     intensivityEffectValue.value = filters[`${evt.target.id}`].range.max;
 
     photoPreview.classList = 'img-upload__preview';
@@ -118,7 +118,7 @@ const settingsSlider = () => {
       });
     }
   };
-  filtresList.addEventListener('change', onChangeFiltresList);
+  filtresList.addEventListener('change', onChangeFiltersList);
 };
 
 export {settingsSlider};

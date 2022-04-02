@@ -1416,3 +1416,26 @@ main {
 .hidden {
   display: none;
 }
+
+.error-load-container {
+  position: absolute;
+  display: block;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  padding: 60px;
+  color: rgb(236, 92, 85);
+  background-color: rgba(35, 35, 33, 0.932);
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  z-index: 2;
+  top: 260px;
+  width: 600px;
+  height: 190px;
+}
+
+.error-post-container{
+  width: 450px;
+  height: 50px;
+}

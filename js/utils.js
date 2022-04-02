@@ -1,4 +1,5 @@
-import {COMMENTS_ID, ID_NUMBER, BODY} from '../js/data.js';
+const BODY = document.querySelector('body');
+const ALERT_SHOW_TIME = 5000;
 
 const getRandomNumber = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -17,18 +18,7 @@ const makeCounter = (start) => {
   return () => currentCount++;
 };
 
-const counterId = makeCounter(1);
-const counterUrl = makeCounter(1);
-
-const createCommentId =  () => {
-  const randomNumber = Math.floor(Math.random() * ID_NUMBER);
-  if (!COMMENTS_ID.includes(randomNumber)) {
-    COMMENTS_ID.push(randomNumber);
-    return randomNumber;
-  } else if (COMMENTS_ID.length - 1 !== ID_NUMBER) {
-    createCommentId();
-  }
-};
+const counter = makeCounter(1);
 
 const removeAllChildren = (element) => {
   while (element.firstChild) {
@@ -70,4 +60,36 @@ const closePopup = (element, closeButton) => {
   element.addEventListener('click', onElementClickOutside);
 };
 
-export {getRandomNumber, checkMaxLength, getRandomArrayElement, counterId, counterUrl, createCommentId, removeAllChildren, closePopup};
+const onError = (element, error, className) => {
+  const errorOverlay = document.createElement('div');
+  errorOverlay.classList.add(`${className}`);
+  errorOverlay.innerHTML = `<p>${error.message}</p>`;
+  element.appendChild(errorOverlay);
+
+  setTimeout(() => {
+    errorOverlay.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+const showDownloadMessage = (status) => {
+  const statusTemplate = document.querySelector(`#${status}`).content;
+  const statusElement = statusTemplate.cloneNode(true);
+  BODY.classList.add('modal-open');
+  statusElement.classList.remove('hidden');
+  BODY.appendChild(statusElement);
+  closePopup (document.querySelector(`.${status}`), document.querySelector(`.${status}__button`));
+};
+
+const blockSubmitButton = (submitButton) => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Подождите...';
+};
+
+const unblockSubmitButton = (submitButton) => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
+
+export {getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren,
+  closePopup, onError, blockSubmitButton, unblockSubmitButton, showDownloadMessage};

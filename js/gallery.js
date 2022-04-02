@@ -1,7 +1,7 @@
 import { fillFullPhoto, bigPicture } from '../js/show-full-photo.js';
 import { closePopup } from '../js/utils.js';
-import { pictures } from '../js/create-thumbnails.js';
 
+const pictures = document.querySelector('.pictures');
 const buttonBigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 
 const openFullPhoto = () => {
