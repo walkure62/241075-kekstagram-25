@@ -25,6 +25,11 @@ const removeAllChildren = (element) => {
     element.removeChild(element.firstChild);
   }
 };
+const removeAllPictures = (element) => {
+  while (element.childNodes[6]) {
+    element.removeChild(element.lastChild);
+  }
+};
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -90,6 +95,14 @@ const unblockSubmitButton = (submitButton) => {
   submitButton.textContent = 'Опубликовать';
 };
 
+function debounce (callback, timeoutDelay) {
+  // eslint-disable-next-line prefer-const
+  let timeoutId;
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(() => callback.apply(), timeoutDelay);
+}
+
 
 export {getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren,
-  closePopup, onError, blockSubmitButton, unblockSubmitButton, showDownloadMessage};
+  removeAllPictures, closePopup, onError, blockSubmitButton, unblockSubmitButton,
+  debounce, showDownloadMessage};
