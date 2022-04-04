@@ -1,6 +1,8 @@
+import { removeAllPictures } from '../js/utils.js';
 const pictures = document.querySelector('.pictures');
 const picturesTemplate = document.querySelector('#picture').content;
 const picturesFragment = document.createDocumentFragment();
+const picturesFiltres = document.querySelector('.img-filters');
 
 const createPictures = (data) => {
   data.forEach((post) => {
@@ -12,8 +14,12 @@ const createPictures = (data) => {
     pictureElement.querySelector('.picture__img').id = post.id;
 
     picturesFragment.appendChild(pictureElement);
-    pictures.appendChild(picturesFragment);
   });
+  removeAllPictures(pictures);
+  pictures.appendChild(picturesFragment);
+
+  picturesFiltres.classList.remove('img-filters--inactive');
+
 };
 
 export {createPictures};

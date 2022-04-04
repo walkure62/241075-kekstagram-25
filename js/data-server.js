@@ -4,13 +4,13 @@ import { showDownloadMessage } from '../js/utils.js';
 
 let pictures = [];
 const BODY = document.querySelector('body');
+
 const getData = (onSuccess) => {
   fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-
       throw new Error(`${response.status} ${response.statusText}: Something went wrong. Please try again or contact support.`);
     })
     .then((element) => {
