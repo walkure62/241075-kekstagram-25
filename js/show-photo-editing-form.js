@@ -1,5 +1,6 @@
 import { closePopup } from '../js/utils.js';
 import { onUploadFormSubmit, pristine} from '../js/form-validation.js';
+import { donwloadPhoto } from '../js/photo-preview.js';
 
 const BODY = document.querySelector('body');
 const uploadButton = document.querySelector('#upload-file');
@@ -25,10 +26,10 @@ const openEditor = () => {
   uploadButton.addEventListener('change', () => {
     BODY.classList.add('modal-open');
     editForm.classList.remove('hidden');
-
+    donwloadPhoto();
     onUploadFormSubmit(closeEditForm);
     closeEditForm();
   });
 };
 
-export {openEditor, uploadForm};
+export { openEditor, uploadForm };

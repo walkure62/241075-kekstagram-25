@@ -22,4 +22,4 @@ const createPictures = (data) => {
 
 };
 
-export {createPictures};
+export { createPictures };

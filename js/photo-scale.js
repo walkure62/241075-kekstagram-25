@@ -31,4 +31,4 @@ const changeScale = () => {
   });
 };
 
-export {changeScale};
+export { changeScale };

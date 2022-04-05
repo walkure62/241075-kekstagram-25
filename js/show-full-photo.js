@@ -79,4 +79,4 @@ const fillFullPhoto = (data) => {
   });
 };
 
-export {fillFullPhoto, bigPicture};
+export { fillFullPhoto, bigPicture };

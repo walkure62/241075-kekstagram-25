@@ -58,4 +58,4 @@ const filteringImagesFromUsers = (data) => {
   });
 };
 
-export {filteringImagesFromUsers};
+export { filteringImagesFromUsers };

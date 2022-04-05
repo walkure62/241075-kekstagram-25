@@ -1,4 +1,3 @@
-
 import { onError } from '../js/utils.js';
 import { showDownloadMessage } from '../js/utils.js';
 
@@ -44,4 +43,4 @@ const postData = (onSuccess, onFail, body) => {
     });
 };
 
-export {pictures, getData, postData};
+export { pictures, getData, postData };
