@@ -121,4 +121,4 @@ const settingsSlider = () => {
   filtresList.addEventListener('change', onChangeFiltersList);
 };
 
-export {settingsSlider};
+export { settingsSlider };

@@ -13,4 +13,4 @@ const openFullPhoto = () => {
   });
 };
 
-export {openFullPhoto};
+export { openFullPhoto };

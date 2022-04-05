@@ -103,6 +103,6 @@ function debounce (callback, timeoutDelay) {
 }
 
 
-export {getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren,
+export { getRandomNumber, checkMaxLength, getRandomArrayElement, counter, removeAllChildren,
   removeAllPictures, closePopup, onError, blockSubmitButton, unblockSubmitButton,
-  debounce, showDownloadMessage};
+  debounce, showDownloadMessage };
